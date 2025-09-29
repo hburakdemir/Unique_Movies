@@ -8,12 +8,13 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const [mobileCategoryOpen, setMobileCategoryOpen] = useState(false);
   const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
   // Türleri çek
   useEffect(() => {
     if (!API_KEY) return;
-    
+
     fetch(
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=tr-TR`
     )
@@ -49,7 +50,6 @@ const Navbar = () => {
     <nav className="bg-[#393E46] shadow-md relative z-50">
       <div className=" mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-      
           <div
             className="text-white font-bold text-xl cursor-pointer flex mr-40"
             onClick={() => handleNavigation("/")}
@@ -57,7 +57,6 @@ const Navbar = () => {
             🎬 Logo Yakında
           </div>
 
-        
           <div className="hidden md:flex items-center space-x-1">
             <button
               onClick={() => handleNavigation("/")}
@@ -66,7 +65,6 @@ const Navbar = () => {
               Ana Sayfa
             </button>
 
-   
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setOpen(!open)}
@@ -113,7 +111,6 @@ const Navbar = () => {
             </button>
           </div>
 
-       
           <div className="hidden md:flex items-center space-x-4">
             <div className="relative">
               <input
@@ -157,7 +154,7 @@ const Navbar = () => {
             <div className="relative mb-4">
               <input
                 type="text"
-                placeholder="Ara..."
+                placeholder="YAKINDA GELİCEK"
                 className="w-full px-4 py-2 pr-10 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500"
               />
               <Icon
@@ -176,31 +173,32 @@ const Navbar = () => {
             {/* Kategoriler - Mobile Accordion */}
             <div>
               <button
-                onClick={() => setOpen(!open)}
+                onClick={() => setMobileCategoryOpen(!mobileCategoryOpen)}
                 className="flex items-center justify-between w-full px-4 py-3 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors"
               >
                 <span>Kategoriler</span>
                 <Icon
-                  icon={open ? "mdi:chevron-up" : "mdi:chevron-down"}
+                  icon={
+                    mobileCategoryOpen ? "mdi:chevron-up" : "mdi:chevron-down"
+                  }
                   className="w-5 h-5"
                 />
               </button>
 
-              {open && (
-                <div className="mt-2 pl-4 space-y-1 max-h-60 overflow-y-auto">
-                  {genres.map((genre) => (
-                    <button
-                      key={genre.id}
-                      className="block w-full text-left px-4 py-2 text-white text-sm hover:bg-gray-700 rounded-lg transition-colors"
-                      onClick={() => {
-                        handleNavigation(`/category/${genre.id}`);
-                      }}
-                    >
-                      {genre.name}
-                    </button>
-                  ))}
-                </div>
-              )}
+              {mobileCategoryOpen && (
+  <div className="mt-2 pl-4 space-y-1 max-h-60 overflow-y-auto">
+    {genres.map((genre) => (
+      <button
+        key={genre.id}
+        className="block w-full text-left px-4 py-2 text-white text-sm hover:bg-gray-700 rounded-lg transition-colors"
+        onClick={() => handleNavigation(`/category/${genre.id}`)}
+      >
+        {genre.name}
+      </button>
+    ))}
+  </div>
+)}
+
             </div>
 
             <button
@@ -227,7 +225,6 @@ const Navbar = () => {
           </div>
         </div>
       )}
-
 
       <style jsx>{`
         ::-webkit-scrollbar {
