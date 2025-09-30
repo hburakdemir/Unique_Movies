@@ -115,7 +115,7 @@ const Navbar = () => {
             <div className="relative">
               <input
                 type="text"
-                placeholder="İşlevi yok sakin ol"
+                placeholder="çok yakında"
                 className="px-4 py-2 pr-10 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 w-48"
               />
               <Icon
